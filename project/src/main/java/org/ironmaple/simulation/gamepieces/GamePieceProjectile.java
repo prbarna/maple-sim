@@ -160,14 +160,12 @@ public class GamePieceProjectile implements GamePiece {
             ChassisSpeeds chassisSpeeds,
             Rotation2d chassisFacing,
             double groundSpeedMPS) {
-        final Translation2d
-                chassisTranslationalVelocity =
-                        new Translation2d(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond),
+        final Translation2d chassisTranslationalVelocity = new Translation2d(chassisSpeeds.vx, chassisSpeeds.vy),
                 shooterGroundVelocityDueToChassisRotation =
                         shooterPositionOnRobot
                                 .rotateBy(chassisFacing)
                                 .rotateBy(Rotation2d.fromDegrees(90))
-                                .times(chassisSpeeds.omegaRadiansPerSecond),
+                                .times(chassisSpeeds.omega),
                 shooterGroundVelocity = chassisTranslationalVelocity.plus(shooterGroundVelocityDueToChassisRotation);
 
         return shooterGroundVelocity.plus(new Translation2d(groundSpeedMPS, chassisFacing));

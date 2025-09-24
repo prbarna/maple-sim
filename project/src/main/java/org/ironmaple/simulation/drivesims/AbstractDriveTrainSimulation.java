@@ -94,7 +94,7 @@ public abstract class AbstractDriveTrainSimulation extends Body {
      */
     public void setRobotSpeeds(ChassisSpeeds givenSpeeds) {
         super.setLinearVelocity(GeometryConvertor.toDyn4jLinearVelocity(givenSpeeds));
-        super.setAngularVelocity(givenSpeeds.omegaRadiansPerSecond);
+        super.setAngularVelocity(givenSpeeds.omega);
     }
 
     /**
@@ -145,8 +145,7 @@ public abstract class AbstractDriveTrainSimulation extends Body {
      */
     public ChassisSpeeds getDriveTrainSimulatedChassisSpeedsRobotRelative() {
         ChassisSpeeds speeds = getDriveTrainSimulatedChassisSpeedsFieldRelative();
-        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                speeds, getSimulatedDriveTrainPose().getRotation());
+        speeds = speeds.toRobotRelative(getSimulatedDriveTrainPose().getRotation());
         return speeds;
     }
 

@@ -60,7 +60,7 @@ public class ReefscapeCoralOnFly extends GamePieceProjectile {
                 ? new ReefscapeCoralOnFly(
                         pos,
                         new Translation2d(),
-                        ChassisSpeeds.fromRobotRelativeSpeeds(new ChassisSpeeds(3.0, 0, 0), rot),
+                        new ChassisSpeeds(3.0, 0, 0).toFieldRelative(rot),
                         rot.rotateBy(Rotation2d.kCCW_90deg),
                         Centimeters.of(98),
                         MetersPerSecond.of(0),

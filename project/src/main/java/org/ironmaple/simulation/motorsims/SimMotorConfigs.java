@@ -164,23 +164,23 @@ public final class SimMotorConfigs {
     }
 
     public AngularVelocity freeSpinMechanismVelocity() {
-        return RadiansPerSecond.of(motor.freeSpeedRadPerSec / gearing);
+        return RadiansPerSecond.of(motor.freeSpeed / gearing);
     }
 
     public Current freeSpinCurrent() {
-        return Amps.of(motor.freeCurrentAmps);
+        return Amps.of(motor.freeCurrent);
     }
 
     public Current stallCurrent() {
-        return Amps.of(motor.stallCurrentAmps);
+        return Amps.of(motor.stallCurrent);
     }
 
     public Torque stallTorque() {
-        return NewtonMeters.of(motor.stallTorqueNewtonMeters);
+        return NewtonMeters.of(motor.stallTorque);
     }
 
     public Voltage nominalVoltage() {
-        return Volts.of(motor.nominalVoltageVolts);
+        return Volts.of(motor.nominalVoltage);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class GeometryConvertor {
     }
 
     public static Vector2 toDyn4jLinearVelocity(ChassisSpeeds wpilibChassisSpeeds) {
-        return new Vector2(wpilibChassisSpeeds.vxMetersPerSecond, wpilibChassisSpeeds.vyMetersPerSecond);
+        return new Vector2(wpilibChassisSpeeds.vx, wpilibChassisSpeeds.vy);
     }
 
     public static ChassisSpeeds toWpilibChassisSpeeds(Vector2 dyn4jLinearVelocity, double angularVelocityRadPerSec) {
@@ -48,6 +48,6 @@ public class GeometryConvertor {
     }
 
     public static Translation2d getChassisSpeedsTranslationalComponent(ChassisSpeeds chassisSpeeds) {
-        return new Translation2d(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond);
+        return new Translation2d(chassisSpeeds.vx, chassisSpeeds.vy);
     }
 }

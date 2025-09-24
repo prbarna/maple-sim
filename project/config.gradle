@@ -1,7 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
 nativeUtils.addWpiNativeUtils()
-nativeUtils.withCrossRoboRIO()
+nativeUtils.withCrossSystemCore()
 nativeUtils.withCrossLinuxArm32()
 nativeUtils.withCrossLinuxArm64()
 
@@ -28,10 +28,10 @@ nativeUtils.setSinglePrintPerPlatform()
 //nativeUtils.wpi.getVendorDeps().addVendorReposToMaven(false)
 
 model {
-    // Uncomment this, and remove lines below it to enable builds for just roborio
+    // Uncomment this, and remove lines below it to enable builds for just systemcore
     components {
         all {
-            targetPlatform nativeUtils.wpi.platforms.roborio
+            targetPlatform nativeUtils.wpi.platforms.systemcore
         }
     }
 }

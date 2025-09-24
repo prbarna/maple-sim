@@ -151,8 +151,8 @@ public class SwerveDriveSimulation extends AbstractDriveTrainSimulation {
         final ChassisSpeeds differenceBetweenFloorSpeedAndModuleSpeedsRobotRelative =
                 moduleSpeeds.minus(getDriveTrainSimulatedChassisSpeedsRobotRelative());
         final Translation2d floorAndModuleSpeedsDiffFieldRelative = new Translation2d(
-                        differenceBetweenFloorSpeedAndModuleSpeedsRobotRelative.vxMetersPerSecond,
-                        differenceBetweenFloorSpeedAndModuleSpeedsRobotRelative.vyMetersPerSecond)
+                        differenceBetweenFloorSpeedAndModuleSpeedsRobotRelative.vx,
+                        differenceBetweenFloorSpeedAndModuleSpeedsRobotRelative.vy)
                 .rotateBy(getSimulatedDriveTrainPose().getRotation());
         final double FRICTION_FORCE_GAIN = 3.0,
                 totalGrippingForce =
@@ -165,8 +165,8 @@ public class SwerveDriveSimulation extends AbstractDriveTrainSimulation {
                 MapleCommonMath.getAngle(floorAndModuleSpeedsDiffFieldRelative).getRadians());
 
         /* the centripetal friction force during turning */
-        final ChassisSpeeds moduleSpeedsFieldRelative = ChassisSpeeds.fromRobotRelativeSpeeds(
-                moduleSpeeds, getSimulatedDriveTrainPose().getRotation());
+        final ChassisSpeeds moduleSpeedsFieldRelative =
+                moduleSpeeds.toRobotRelative(getSimulatedDriveTrainPose().getRotation());
         final Rotation2d dTheta = MapleCommonMath.getAngle(
                         GeometryConvertor.getChassisSpeedsTranslationalComponent(moduleSpeedsFieldRelative))
                 .minus(MapleCommonMath.getAngle(previousModuleSpeedsFieldRelative));
@@ -206,12 +206,10 @@ public class SwerveDriveSimulation extends AbstractDriveTrainSimulation {
     private void simulateChassisFrictionTorque() {
         final double
                 desiredRotationalMotionPercent =
-                        Math.abs(getDesiredSpeed().omegaRadiansPerSecond
-                                / maxAngularVelocity().in(RadiansPerSecond)),
+                        Math.abs(getDesiredSpeed().omega / maxAngularVelocity().in(RadiansPerSecond)),
                 actualRotationalMotionPercent =
                         Math.abs(getAngularVelocity() / maxAngularVelocity().in(RadiansPerSecond)),
-                differenceBetweenFloorSpeedAndModuleSpeed =
-                        getModuleSpeeds().omegaRadiansPerSecond - getAngularVelocity(),
+                differenceBetweenFloorSpeedAndModuleSpeed = getModuleSpeeds().omega - getAngularVelocity(),
                 grippingTorqueMagnitude =
                         moduleSimulations[0].config.getGrippingForceNewtons(gravityForceOnEachModule)
                                 * moduleTranslations[0].getNorm()

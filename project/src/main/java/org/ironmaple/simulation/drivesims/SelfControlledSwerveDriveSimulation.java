@@ -276,12 +276,11 @@ public class SelfControlledSwerveDriveSimulation {
             boolean fieldCentricDrive,
             boolean discretizeSpeeds) {
         if (fieldCentricDrive) {
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    chassisSpeeds, getOdometryEstimatedPose().getRotation());
+            chassisSpeeds =
+                    chassisSpeeds.toRobotRelative(getOdometryEstimatedPose().getRotation());
         }
         if (discretizeSpeeds) {
-            chassisSpeeds = ChassisSpeeds.discretize(
-                    chassisSpeeds,
+            chassisSpeeds = chassisSpeeds.discretize(
                     SimulatedArena.getSimulationDt().in(Seconds) * SimulatedArena.getSimulationSubTicksIn1Period());
         }
         final SwerveModuleState[] setPoints = kinematics.toSwerveModuleStates(chassisSpeeds, centerOfRotationMeters);
@@ -347,8 +346,7 @@ public class SelfControlledSwerveDriveSimulation {
      */
     public ChassisSpeeds getMeasuredSpeedsFieldRelative(boolean useGyroForAngularVelocity) {
         ChassisSpeeds speeds = getMeasuredSpeedsRobotRelative(useGyroForAngularVelocity);
-        speeds = ChassisSpeeds.fromRobotRelativeSpeeds(
-                speeds, getOdometryEstimatedPose().getRotation());
+        speeds = speeds.toRobotRelative(getOdometryEstimatedPose().getRotation());
         return speeds;
     }
 
@@ -365,14 +363,14 @@ public class SelfControlledSwerveDriveSimulation {
     public ChassisSpeeds getMeasuredSpeedsRobotRelative(boolean useGyroForAngularVelocity) {
         final ChassisSpeeds swerveSpeeds = kinematics.toChassisSpeeds(getMeasuredStates());
         return new ChassisSpeeds(
-                swerveSpeeds.vxMetersPerSecond,
-                swerveSpeeds.vyMetersPerSecond,
+                swerveSpeeds.vx,
+                swerveSpeeds.vy,
                 useGyroForAngularVelocity
                         ? swerveDriveSimulation
                                 .gyroSimulation
                                 .getMeasuredAngularVelocity()
                                 .in(RadiansPerSecond)
-                        : swerveSpeeds.omegaRadiansPerSecond);
+                        : swerveSpeeds.omega);
     }
 
     /**

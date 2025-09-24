@@ -21,6 +21,6 @@ public class SwerveStateProjection {
         double cosTheta = Math.cos(swerveModuleAngle.minus(currentSwerveFacing).getRadians());
 
         // Scale the speed by the cosine value to get the projection
-        return swerveSpeed.speedMetersPerSecond * cosTheta;
+        return swerveSpeed.speed * cosTheta;
     }
 }

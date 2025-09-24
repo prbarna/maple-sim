@@ -112,7 +112,7 @@ public class GamePieceOnFieldSimulation extends Body implements GamePiece {
      */
     public void setVelocity(ChassisSpeeds chassisSpeedsWorldFrame) {
         super.setLinearVelocity(GeometryConvertor.toDyn4jLinearVelocity(chassisSpeedsWorldFrame));
-        super.setAngularVelocity(chassisSpeedsWorldFrame.omegaRadiansPerSecond);
+        super.setAngularVelocity(chassisSpeedsWorldFrame.omega);
     }
 
     /**
